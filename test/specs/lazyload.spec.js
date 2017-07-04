@@ -130,6 +130,26 @@ describe('LazyLoad', () => {
 
       expect(document.querySelector('.my-placeholder')).to.exist;
     });
+
+    it('should not render anything if child renders null', (done) => {
+      console.log("nullcomponent test start");
+      function NullComponent(props) {
+        console.log("returning null");
+        return null; };
+
+      ReactDOM.render(
+        <div className="testing-container">
+          <LazyLoad height={200}>
+            <NullComponent />
+          </LazyLoad>
+        </div>, div);
+
+      setTimeout(() => {
+        console.log(document.querySelector(".testing-container"));
+        expect(document.querySelector('.testing-container *')).not.to.exist;
+        done();
+      }, 500);
+    });
   });
 
   describe('Checking visibility', () => {
